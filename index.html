@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ለአንቺ ብቻ</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #fff0f5;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+    }
+
+    #message {
+      display: none;
+      padding: 30px;
+      background-color: #ffe6f06c;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      z-index: 10;
+      max-width: 500px;
+    }
+
+    #message h2 {
+      color: #d63384;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    #message p {
+      font-size: 18px;
+      color: #010203;
+      line-height: 1.6;
+      font-weight: bold; 
+      margin-bottom: 20px;
+    }
+
+    .floating {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.8;
+      animation: floatUp 8s linear infinite;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    #tapMessage {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: #d63384;
+      font-weight: bold;
+      animation: fadeInOut 3s ease-in-out;
+      display: none;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Audio element -->
+  <audio id="myAudio" loop>
+    <source src="love.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div id="message">
+    <h2>💖 ለአንቺ ብቻ 💖</h2>
+    <p>
+      ሰሉዬ ሌላ ቦታ መሄድሽን ስለነገርሽኝ፣<br>
+      ስላንቺ ማሰቢያዬ በጣም ጨምራል።<br>
+      💌
+    </p>
+  </div>
+
+  <div id="tapMessage">Tap anywhere to play music</div>
+
+  <script>
+    // Immediately attempt to play music after name verification
+    const allowedNames = ["selu", "love"];
+    const userName = prompt("Please enter your ID:");
+
+    if (userName && allowedNames.includes(userName.toLowerCase().trim())) {
+      document.getElementById("message").style.display = "block";
+      
+      const audio = document.getElementById("myAudio");
+      const tapMessage = document.getElementById("tapMessage");
+      
+      // Attempt to play immediately (using the prompt as user interaction)
+      audio.play().catch(error => {
+        console.log("Autoplay prevented, showing tap message");
+        tapMessage.style.display = "block";
+        
+        // Hide message after 3 seconds
+        setTimeout(() => {
+          tapMessage.style.display = "none";
+        }, 3000);
+        
+        // Allow playback on any click
+        document.body.addEventListener('click', function() {
+          audio.play();
+        }, { once: true });
+      });
+
+      // Create floating hearts and sparkles
+      const emojis = ["💖", "✨", "💘", "🌟", "❤️"];
+      for (let i = 0; i < 50; i++) {
+        const float = document.createElement("div");
+        float.classList.add("floating");
+        float.style.left = Math.random() * 100 + "vw";
+        float.style.animationDuration = (4 + Math.random() * 6) + "s";
+        float.style.fontSize = (20 + Math.random() * 30) + "px";
+        float.style.top = Math.random() * 100 + "vh";
+        float.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        document.body.appendChild(float);
+      }
+    } else {
+      alert("Access denied. You are not the one.");
+    }
+  </script>
+</body>
+</html>
