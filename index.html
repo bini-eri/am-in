@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>ለአንቺ ብቻ</title>
+  <title>Just for You</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
@@ -13,8 +14,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      position: relative;
+      min-height: 100vh;
+      flex-direction: column;
+      text-align: center;
     }
 
     #message {
@@ -23,22 +25,21 @@
       background-color: #ffe6f06c;
       border-radius: 15px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      text-align: center;
-      z-index: 10;
-      max-width: 500px;
+      max-width: 90%;
+      box-sizing: border-box;
     }
 
     #message h2 {
       color: #d63384;
       font-size: 28px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
     #message p {
       font-size: 18px;
       color: #010203;
       line-height: 1.6;
-      font-weight: bold; 
+      font-weight: bold;
       margin-bottom: 20px;
     }
 
@@ -89,44 +90,38 @@
   </audio>
 
   <div id="message">
-    <h2>💖 ለአንቺ ብቻ 💖</h2>
+    <h2>💖 Just for You 💖</h2>
     <p>
-      ሰሉዬ ሌላ ቦታ መሄድሽን ስለነገርሽኝ፣<br>
-      ስላንቺ ማሰቢያዬ በጣም ጨምራል።<br>
-      💌
+            Would you be open to having a short meeting with me?<br>
+      It can be anywhere you're comfortable — just you and me, in peace.<br><br>
+      You can pick the time and place. I’ll be there.<br><br>
+      Looking forward to it. 💌
     </p>
   </div>
 
   <div id="tapMessage">Tap anywhere to play music</div>
 
   <script>
-    // Immediately attempt to play music after name verification
     const allowedNames = ["selu", "love"];
     const userName = prompt("Please enter your ID:");
 
     if (userName && allowedNames.includes(userName.toLowerCase().trim())) {
       document.getElementById("message").style.display = "block";
-      
+
       const audio = document.getElementById("myAudio");
       const tapMessage = document.getElementById("tapMessage");
-      
-      // Attempt to play immediately (using the prompt as user interaction)
+
       audio.play().catch(error => {
-        console.log("Autoplay prevented, showing tap message");
         tapMessage.style.display = "block";
-        
-        // Hide message after 3 seconds
         setTimeout(() => {
           tapMessage.style.display = "none";
         }, 3000);
-        
-        // Allow playback on any click
-        document.body.addEventListener('click', function() {
+
+        document.body.addEventListener('click', function () {
           audio.play();
         }, { once: true });
       });
 
-      // Create floating hearts and sparkles
       const emojis = ["💖", "✨", "💘", "🌟", "❤️"];
       for (let i = 0; i < 50; i++) {
         const float = document.createElement("div");
